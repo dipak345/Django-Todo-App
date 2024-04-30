@@ -5,7 +5,7 @@ pipeline {
         stage("Clone Code") {
             steps {
                 echo "Cloning the code"
-                git url: "https://github.com/siddhantbhattarai/Django-Todo-App.git", branch: "main"
+                git url: "https://github.com/dipak345/Django-Todo-App.git", branch: "main"
             }
         }
 
@@ -19,10 +19,10 @@ pipeline {
         stage("Push to Docker Hub") {
             steps {
                 echo "Pushing the Docker image to Docker Hub"
-                withCredentials([usernamePassword(credentialsId: "dockerHub", passwordVariable: "dockerHubPass", usernameVariable: "dockerHubUser")]) {
-                    sh "docker tag todo-list-app ${env.dockerHubUser}/todo-list-app:latest"
-                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-                    sh "docker push ${env.dockerHubUser}/todo-list-app:latest"
+                withCredentials([usernamePassword(credentialsId: "poll", passwordVariable: "pwd", usernameVariable: "uname")]) {
+                    sh "docker tag todo-list-app ${env.uname}/todo-list-app:latest"
+                    sh "docker login -u ${env.uname} -p ${env.pwd}"
+                    sh "docker push ${env.uname}/todo-list-app:latest"
                 }
             }
         }
